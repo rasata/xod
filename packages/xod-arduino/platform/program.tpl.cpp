@@ -26,7 +26,9 @@ namespace xod {
 {{ ns patch }}::Node node_{{ id }} = {
     {{ ns patch }}::State(), // state default
   {{#if patch.raisesErrors}}
-    false, // hasOwnError
+    {{#each outputs}}
+    false, // {{ pinKey }} has no errors on start
+    {{/each}}
   {{/if}}
   {{#if patch.usesTimeouts}}
     0, // timeoutAt
@@ -111,7 +113,7 @@ void runTransaction() {
     {
         if (node_{{ id }}.isNodeDirty) {
             // if a defer has an error, do not evaluate it, but spread the dirtyness
-            if ({{#if (hasUpstreamErrorRaisers this)}}!node_{{ id }}.hasOwnError{{else}}true{{/if}}) {
+            if ({{#if (hasUpstreamErrorRaisers this)}}!node_{{ id }}.errorFlags{{else}}true{{/if}}) {
               XOD_TRACE_F("Trigger defer node #");
               XOD_TRACE_LN({{ id }});
 
@@ -150,7 +152,7 @@ void runTransaction() {
       {{#eachInputPinWithUpstreamRaisers inputs}}
         bool error_input_{{ pinKey }} = false;
         {{#each upstreamErrorRaisers}}
-        error_input_{{ ../pinKey }} |= node_{{ this }}.hasOwnError;
+        error_input_{{ ../pinKey }} |= node_{{ nodeId }}.outputHasError_{{ pinKey }};
         {{/each}}
       {{/eachInputPinWithUpstreamRaisers}}
 
@@ -224,19 +226,19 @@ void runTransaction() {
 
           {{#if patch.raisesErrors}}
 #if defined(XOD_DEBUG) || defined(XOD_SIMULATION)
-            uint8_t hadOwnErrorBeforeEvaluation = node_{{ id }}.hasOwnError;
+            ErrorFlags previousErrorFlags = node_{{ id }}.errorFlags;
 #endif
-            // give the node a chance to recover from it's own previous error
-            node_{{ id }}.hasOwnError = false;
+            // give the node a chance to recover from it's own previous errors
+            node_{{ id }}.errorFlags = 0;
           {{/if}}
 
             {{ ns patch }}::evaluate(&ctxObj);
 
           {{#if patch.raisesErrors}}
 #if defined(XOD_DEBUG) || defined(XOD_SIMULATION)
-            if (hadOwnErrorBeforeEvaluation && !node_{{ id }}.hasOwnError) {
+            if (previousErrorFlags != node_{{ id }}.errorFlags) {
                 // report that the node recovered from error
-                detail::printErrorToDebugSerial({{ id }}, 0);
+                detail::printErrorToDebugSerial({{ id }}, node_{{ id }}.errorFlags);
             }
 #endif
           {{/if}}

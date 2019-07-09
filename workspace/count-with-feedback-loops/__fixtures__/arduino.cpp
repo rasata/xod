@@ -83,6 +83,7 @@ typedef double Number;
 typedef bool Logic;
 typedef unsigned long TimeMs;
 typedef uint8_t DirtyFlags;
+typedef uint8_t ErrorFlags;
 } // namespace xod
 
 /*=============================================================================
@@ -865,13 +866,13 @@ void clearStaleTimeout(NodeT* node) {
 }
 
 #if defined(XOD_DEBUG) || defined(XOD_SIMULATION)
-void printErrorToDebugSerial(uint16_t nodeId, uint8_t errCode) {
+void printErrorToDebugSerial(uint16_t nodeId, uint8_t errorFlags) {
     XOD_DEBUG_SERIAL.print(F("+XOD_ERR:"));
     XOD_DEBUG_SERIAL.print(g_transactionTime);
     XOD_DEBUG_SERIAL.print(':');
     XOD_DEBUG_SERIAL.print(nodeId);
     XOD_DEBUG_SERIAL.print(':');
-    XOD_DEBUG_SERIAL.print((int)errCode);
+    XOD_DEBUG_SERIAL.print(errorFlags, DEC);
     XOD_DEBUG_SERIAL.print('\r');
     XOD_DEBUG_SERIAL.print('\n');
 }
@@ -1844,7 +1845,13 @@ struct State {
 
 struct Node {
     State state;
-    bool hasOwnError;
+    union {
+        struct {
+            bool outputHasError_DONE : 1;
+        };
+
+      ErrorFlags errorFlags;
+    };
     Logic output_DONE;
 
     union {
@@ -1967,13 +1974,18 @@ uint16_t getNodeId(Context ctx) {
     return ctx->_nodeId;
 }
 
-void raiseError(Context ctx) {
-    ctx->_node->hasOwnError = true;
+template<typename OutputT> void raiseError(Context ctx) {
+    static_assert(always_false<OutputT>::value,
+            "Invalid output descriptor. Expected one of:" \
+            " output_DONE");
+}
 
+template<> void raiseError<output_DONE>(Context ctx) {
+    ctx->_node->outputHasError_DONE = true;
     ctx->_node->isOutputDirty_DONE = true;
 
 #if defined(XOD_DEBUG) || defined(XOD_SIMULATION)
-    detail::printErrorToDebugSerial(ctx->_nodeId, 1);
+    detail::printErrorToDebugSerial(ctx->_nodeId, ctx->_node->errorFlags);
 #endif
 }
 
@@ -2046,7 +2058,13 @@ struct State {
 
 struct Node {
     State state;
-    bool hasOwnError;
+    union {
+        struct {
+            bool outputHasError_OUT : 1;
+        };
+
+      ErrorFlags errorFlags;
+    };
     TimeMs timeoutAt;
     Logic output_OUT;
 
@@ -2123,13 +2141,18 @@ uint16_t getNodeId(Context ctx) {
     return ctx->_nodeId;
 }
 
-void raiseError(Context ctx) {
-    ctx->_node->hasOwnError = true;
+template<typename OutputT> void raiseError(Context ctx) {
+    static_assert(always_false<OutputT>::value,
+            "Invalid output descriptor. Expected one of:" \
+            " output_OUT");
+}
 
+template<> void raiseError<output_OUT>(Context ctx) {
+    ctx->_node->outputHasError_OUT = true;
     ctx->_node->isOutputDirty_OUT = true;
 
 #if defined(XOD_DEBUG) || defined(XOD_SIMULATION)
-    detail::printErrorToDebugSerial(ctx->_nodeId, 1);
+    detail::printErrorToDebugSerial(ctx->_nodeId, ctx->_node->errorFlags);
 #endif
 }
 
@@ -2147,7 +2170,7 @@ template<> uint8_t getError<input_IN>(Context ctx) {
 void evaluate(Context ctx) {
     auto err = getError<input_IN>(ctx);
     if (err) {
-        raiseError(ctx);
+        raiseError<output_OUT>(ctx);
         setTimeout(ctx, 0);
     } else {
         if (isInputDirty<input_IN>(ctx)) { // This happens only when all nodes are evaluated
@@ -2173,7 +2196,13 @@ struct State {
 
 struct Node {
     State state;
-    bool hasOwnError;
+    union {
+        struct {
+            bool outputHasError_OUT : 1;
+        };
+
+      ErrorFlags errorFlags;
+    };
     TimeMs timeoutAt;
     Logic output_OUT;
 
@@ -2250,13 +2279,18 @@ uint16_t getNodeId(Context ctx) {
     return ctx->_nodeId;
 }
 
-void raiseError(Context ctx) {
-    ctx->_node->hasOwnError = true;
+template<typename OutputT> void raiseError(Context ctx) {
+    static_assert(always_false<OutputT>::value,
+            "Invalid output descriptor. Expected one of:" \
+            " output_OUT");
+}
 
+template<> void raiseError<output_OUT>(Context ctx) {
+    ctx->_node->outputHasError_OUT = true;
     ctx->_node->isOutputDirty_OUT = true;
 
 #if defined(XOD_DEBUG) || defined(XOD_SIMULATION)
-    detail::printErrorToDebugSerial(ctx->_nodeId, 1);
+    detail::printErrorToDebugSerial(ctx->_nodeId, ctx->_node->errorFlags);
 #endif
 }
 
@@ -2274,7 +2308,7 @@ template<> uint8_t getError<input_IN>(Context ctx) {
 void evaluate(Context ctx) {
     auto err = getError<input_IN>(ctx);
     if (err) {
-        raiseError(ctx);
+        raiseError<output_OUT>(ctx);
         setTimeout(ctx, 0);
     } else {
         if (isInputDirty<input_IN>(ctx)) { // This happens only when all nodes are evaluated
@@ -2434,14 +2468,14 @@ xod__core__cast_to_string__number::Node node_22 = {
 };
 xod__common_hardware__text_lcd_16x2::Node node_23 = {
     xod__common_hardware__text_lcd_16x2::State(), // state default
-    false, // hasOwnError
+    false, // DONE has no errors on start
     node_23_output_DONE, // output DONE default
     false, // DONE dirty
     true // node itself dirty
 };
 xod__core__defer__pulse::Node node_24 = {
     xod__core__defer__pulse::State(), // state default
-    false, // hasOwnError
+    false, // OUT has no errors on start
     0, // timeoutAt
     node_24_output_OUT, // output OUT default
     false, // OUT dirty
@@ -2449,7 +2483,7 @@ xod__core__defer__pulse::Node node_24 = {
 };
 xod__core__defer__boolean::Node node_25 = {
     xod__core__defer__boolean::State(), // state default
-    false, // hasOwnError
+    false, // OUT has no errors on start
     0, // timeoutAt
     node_25_output_OUT, // output OUT default
     true, // OUT dirty
@@ -2542,7 +2576,7 @@ void runTransaction() {
     // Evaluate all dirty nodes
     { // xod__core__cast_to_pulse__boolean #0
         bool error_input_IN = false;
-        error_input_IN |= node_25.hasOwnError;
+        error_input_IN |= node_25.outputHasError_OUT;
 
         bool hasUpstreamError = false;
         hasUpstreamError |= error_input_IN;
@@ -2601,7 +2635,7 @@ void runTransaction() {
     }
     { // xod__core__any #15
         bool error_input_IN1 = false;
-        error_input_IN1 |= node_24.hasOwnError;
+        error_input_IN1 |= node_24.outputHasError_OUT;
 
         bool hasUpstreamError = false;
         hasUpstreamError |= error_input_IN1;
@@ -2653,7 +2687,7 @@ void runTransaction() {
     }
     { // xod__core__delay #17
         bool error_input_SET = false;
-        error_input_SET |= node_24.hasOwnError;
+        error_input_SET |= node_24.outputHasError_OUT;
 
         bool hasUpstreamError = false;
         hasUpstreamError |= error_input_SET;
@@ -2685,7 +2719,7 @@ void runTransaction() {
     }
     { // xod__core__count #18
         bool error_input_RST = false;
-        error_input_RST |= node_25.hasOwnError;
+        error_input_RST |= node_25.outputHasError_OUT;
 
         bool hasUpstreamError = false;
         hasUpstreamError |= error_input_RST;
@@ -2718,7 +2752,7 @@ void runTransaction() {
     }
     { // xod__core__count #19
         bool error_input_INC = false;
-        error_input_INC |= node_24.hasOwnError;
+        error_input_INC |= node_24.outputHasError_OUT;
 
         bool hasUpstreamError = false;
         hasUpstreamError |= error_input_INC;
@@ -2749,7 +2783,7 @@ void runTransaction() {
     }
     { // xod__core__greater #20
         bool error_input_IN1 = false;
-        error_input_IN1 |= node_25.hasOwnError;
+        error_input_IN1 |= node_25.outputHasError_OUT;
 
         bool hasUpstreamError = false;
         hasUpstreamError |= error_input_IN1;
@@ -2777,7 +2811,7 @@ void runTransaction() {
     }
     { // xod__core__cast_to_string__number #21
         bool error_input_IN = false;
-        error_input_IN |= node_25.hasOwnError;
+        error_input_IN |= node_25.outputHasError_OUT;
 
         bool hasUpstreamError = false;
         hasUpstreamError |= error_input_IN;
@@ -2804,7 +2838,7 @@ void runTransaction() {
     }
     { // xod__core__cast_to_string__number #22
         bool error_input_IN = false;
-        error_input_IN |= node_24.hasOwnError;
+        error_input_IN |= node_24.outputHasError_OUT;
 
         bool hasUpstreamError = false;
         hasUpstreamError |= error_input_IN;
@@ -2831,9 +2865,9 @@ void runTransaction() {
     }
     { // xod__common_hardware__text_lcd_16x2 #23
         bool error_input_L1 = false;
-        error_input_L1 |= node_25.hasOwnError;
+        error_input_L1 |= node_25.outputHasError_OUT;
         bool error_input_L2 = false;
-        error_input_L2 |= node_24.hasOwnError;
+        error_input_L2 |= node_24.outputHasError_OUT;
 
         bool hasUpstreamError = false;
         hasUpstreamError |= error_input_L1;
@@ -2861,17 +2895,17 @@ void runTransaction() {
             ctxObj._isInputDirty_UPD = node_7.isOutputDirty_TICK;
 
 #if defined(XOD_DEBUG) || defined(XOD_SIMULATION)
-            uint8_t hadOwnErrorBeforeEvaluation = node_23.hasOwnError;
+            ErrorFlags previousErrorFlags = node_23.errorFlags;
 #endif
-            // give the node a chance to recover from it's own previous error
-            node_23.hasOwnError = false;
+            // give the node a chance to recover from it's own previous errors
+            node_23.errorFlags = 0;
 
             xod__common_hardware__text_lcd_16x2::evaluate(&ctxObj);
 
 #if defined(XOD_DEBUG) || defined(XOD_SIMULATION)
-            if (hadOwnErrorBeforeEvaluation && !node_23.hasOwnError) {
+            if (previousErrorFlags != node_23.errorFlags) {
                 // report that the node recovered from error
-                detail::printErrorToDebugSerial(23, 0);
+                detail::printErrorToDebugSerial(23, node_23.errorFlags);
             }
 #endif
 
@@ -2899,17 +2933,17 @@ void runTransaction() {
             ctxObj._isInputDirty_IN = node_17.isOutputDirty_DONE;
 
 #if defined(XOD_DEBUG) || defined(XOD_SIMULATION)
-            uint8_t hadOwnErrorBeforeEvaluation = node_24.hasOwnError;
+            ErrorFlags previousErrorFlags = node_24.errorFlags;
 #endif
-            // give the node a chance to recover from it's own previous error
-            node_24.hasOwnError = false;
+            // give the node a chance to recover from it's own previous errors
+            node_24.errorFlags = 0;
 
             xod__core__defer__pulse::evaluate(&ctxObj);
 
 #if defined(XOD_DEBUG) || defined(XOD_SIMULATION)
-            if (hadOwnErrorBeforeEvaluation && !node_24.hasOwnError) {
+            if (previousErrorFlags != node_24.errorFlags) {
                 // report that the node recovered from error
-                detail::printErrorToDebugSerial(24, 0);
+                detail::printErrorToDebugSerial(24, node_24.errorFlags);
             }
 #endif
 
@@ -2934,17 +2968,17 @@ void runTransaction() {
             ctxObj._isInputDirty_IN = true;
 
 #if defined(XOD_DEBUG) || defined(XOD_SIMULATION)
-            uint8_t hadOwnErrorBeforeEvaluation = node_25.hasOwnError;
+            ErrorFlags previousErrorFlags = node_25.errorFlags;
 #endif
-            // give the node a chance to recover from it's own previous error
-            node_25.hasOwnError = false;
+            // give the node a chance to recover from it's own previous errors
+            node_25.errorFlags = 0;
 
             xod__core__defer__boolean::evaluate(&ctxObj);
 
 #if defined(XOD_DEBUG) || defined(XOD_SIMULATION)
-            if (hadOwnErrorBeforeEvaluation && !node_25.hasOwnError) {
+            if (previousErrorFlags != node_25.errorFlags) {
                 // report that the node recovered from error
-                detail::printErrorToDebugSerial(25, 0);
+                detail::printErrorToDebugSerial(25, node_25.errorFlags);
             }
 #endif
 
