@@ -2531,7 +2531,7 @@ void runTransaction() {
     {
         if (node_24.isNodeDirty) {
             // if a defer has an error, do not evaluate it, but spread the dirtyness
-            if (true) {
+            if (!node_24.errorFlags) {
               XOD_TRACE_F("Trigger defer node #");
               XOD_TRACE_LN(24);
 
@@ -2540,11 +2540,21 @@ void runTransaction() {
               ctxObj._isInputDirty_IN = false;
               ctxObj._error_input_IN = 0;
 
+#if defined(XOD_DEBUG) || defined(XOD_SIMULATION)
+              ErrorFlags previousErrorFlags = node_24.errorFlags;
+#endif
+
               xod__core__defer__pulse::evaluate(&ctxObj);
+
+#if defined(XOD_DEBUG) || defined(XOD_SIMULATION)
+              if (previousErrorFlags != node_24.errorFlags) {
+                  detail::printErrorToDebugSerial(24, node_24.errorFlags);
+              }
+#endif
             }
 
             // mark downstream nodes dirty
-            node_15.isNodeDirty = true;
+            node_15.isNodeDirty |= (node_24.isOutputDirty_OUT || node_24.errorFlags);
 
             node_24.isNodeDirty = false;
             detail::clearTimeout(&node_24);
@@ -2553,7 +2563,7 @@ void runTransaction() {
     {
         if (node_25.isNodeDirty) {
             // if a defer has an error, do not evaluate it, but spread the dirtyness
-            if (true) {
+            if (!node_25.errorFlags) {
               XOD_TRACE_F("Trigger defer node #");
               XOD_TRACE_LN(25);
 
@@ -2562,11 +2572,21 @@ void runTransaction() {
               ctxObj._isInputDirty_IN = false;
               ctxObj._error_input_IN = 0;
 
+#if defined(XOD_DEBUG) || defined(XOD_SIMULATION)
+              ErrorFlags previousErrorFlags = node_25.errorFlags;
+#endif
+
               xod__core__defer__boolean::evaluate(&ctxObj);
+
+#if defined(XOD_DEBUG) || defined(XOD_SIMULATION)
+              if (previousErrorFlags != node_25.errorFlags) {
+                  detail::printErrorToDebugSerial(25, node_25.errorFlags);
+              }
+#endif
             }
 
             // mark downstream nodes dirty
-            node_0.isNodeDirty = true;
+            node_0.isNodeDirty |= (node_25.isOutputDirty_OUT || node_25.errorFlags);
 
             node_25.isNodeDirty = false;
             detail::clearTimeout(&node_25);
@@ -2904,7 +2924,6 @@ void runTransaction() {
 
 #if defined(XOD_DEBUG) || defined(XOD_SIMULATION)
             if (previousErrorFlags != node_23.errorFlags) {
-                // report that the node recovered from error
                 detail::printErrorToDebugSerial(23, node_23.errorFlags);
             }
 #endif
@@ -2942,7 +2961,6 @@ void runTransaction() {
 
 #if defined(XOD_DEBUG) || defined(XOD_SIMULATION)
             if (previousErrorFlags != node_24.errorFlags) {
-                // report that the node recovered from error
                 detail::printErrorToDebugSerial(24, node_24.errorFlags);
             }
 #endif
@@ -2977,7 +2995,6 @@ void runTransaction() {
 
 #if defined(XOD_DEBUG) || defined(XOD_SIMULATION)
             if (previousErrorFlags != node_25.errorFlags) {
-                // report that the node recovered from error
                 detail::printErrorToDebugSerial(25, node_25.errorFlags);
             }
 #endif
@@ -3002,6 +3019,21 @@ void runTransaction() {
     node_23.dirtyFlags = 0;
     node_24.dirtyFlags = 0;
     node_25.dirtyFlags = 0;
+
+    // Сlean errors from pulse outputs
+    if (node_23.outputHasError_DONE) {
+      node_23.outputHasError_DONE = false;
+#if defined(XOD_DEBUG) || defined(XOD_SIMULATION)
+      detail::printErrorToDebugSerial(23, node_23.errorFlags);
+#endif
+    }
+    if (node_24.outputHasError_OUT) {
+      node_24.outputHasError_OUT = false;
+#if defined(XOD_DEBUG) || defined(XOD_SIMULATION)
+      detail::printErrorToDebugSerial(24, node_24.errorFlags);
+#endif
+    }
+
     detail::clearStaleTimeout(&node_7);
     detail::clearStaleTimeout(&node_16);
     detail::clearStaleTimeout(&node_17);

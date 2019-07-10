@@ -1730,7 +1730,6 @@ void runTransaction() {
 
 #if defined(XOD_DEBUG) || defined(XOD_SIMULATION)
             if (previousErrorFlags != node_4.errorFlags) {
-                // report that the node recovered from error
                 detail::printErrorToDebugSerial(4, node_4.errorFlags);
             }
 #endif
@@ -1764,7 +1763,6 @@ void runTransaction() {
 
 #if defined(XOD_DEBUG) || defined(XOD_SIMULATION)
             if (previousErrorFlags != node_5.errorFlags) {
-                // report that the node recovered from error
                 detail::printErrorToDebugSerial(5, node_5.errorFlags);
             }
 #endif
@@ -1901,7 +1899,6 @@ void runTransaction() {
 
 #if defined(XOD_DEBUG) || defined(XOD_SIMULATION)
             if (previousErrorFlags != node_9.errorFlags) {
-                // report that the node recovered from error
                 detail::printErrorToDebugSerial(9, node_9.errorFlags);
             }
 #endif
@@ -1922,6 +1919,27 @@ void runTransaction() {
     node_7.dirtyFlags = 0;
     node_8.dirtyFlags = 0;
     node_9.dirtyFlags = 0;
+
+    // Сlean errors from pulse outputs
+    if (node_4.outputHasError_DONE) {
+      node_4.outputHasError_DONE = false;
+#if defined(XOD_DEBUG) || defined(XOD_SIMULATION)
+      detail::printErrorToDebugSerial(4, node_4.errorFlags);
+#endif
+    }
+    if (node_5.outputHasError_DONE) {
+      node_5.outputHasError_DONE = false;
+#if defined(XOD_DEBUG) || defined(XOD_SIMULATION)
+      detail::printErrorToDebugSerial(5, node_5.errorFlags);
+#endif
+    }
+    if (node_9.outputHasError_DONE) {
+      node_9.outputHasError_DONE = false;
+#if defined(XOD_DEBUG) || defined(XOD_SIMULATION)
+      detail::printErrorToDebugSerial(9, node_9.errorFlags);
+#endif
+    }
+
     detail::clearStaleTimeout(&node_3);
 
     XOD_TRACE_F("Transaction completed, t=");

@@ -113,7 +113,7 @@ void runTransaction() {
     {
         if (node_{{ id }}.isNodeDirty) {
             // if a defer has an error, do not evaluate it, but spread the dirtyness
-            if ({{#if (hasUpstreamErrorRaisers this)}}!node_{{ id }}.errorFlags{{else}}true{{/if}}) {
+            if (!node_{{ id }}.errorFlags) {
               XOD_TRACE_F("Trigger defer node #");
               XOD_TRACE_LN({{ id }});
 
@@ -122,14 +122,24 @@ void runTransaction() {
               ctxObj._isInputDirty_IN = false;
               ctxObj._error_input_IN = 0;
 
+#if defined(XOD_DEBUG) || defined(XOD_SIMULATION)
+              ErrorFlags previousErrorFlags = node_{{ id }}.errorFlags;
+#endif
+
               {{ ns patch }}::evaluate(&ctxObj);
+
+#if defined(XOD_DEBUG) || defined(XOD_SIMULATION)
+              if (previousErrorFlags != node_{{ id }}.errorFlags) {
+                  detail::printErrorToDebugSerial({{ id }}, node_{{ id }}.errorFlags);
+              }
+#endif
             }
 
             // mark downstream nodes dirty
           {{#each outputs }}
             {{#if isDirtyable ~}}
             {{#each to}}
-            node_{{ this }}.isNodeDirty = true;
+            node_{{ this }}.isNodeDirty |= (node_{{ ../../id }}.isOutputDirty_{{ ../pinKey }} || node_{{ ../../id }}.errorFlags);
             {{/each}}
             {{else}}
             {{#each to}}
@@ -237,7 +247,6 @@ void runTransaction() {
           {{#if patch.raisesErrors}}
 #if defined(XOD_DEBUG) || defined(XOD_SIMULATION)
             if (previousErrorFlags != node_{{ id }}.errorFlags) {
-                // report that the node recovered from error
                 detail::printErrorToDebugSerial({{ id }}, node_{{ id }}.errorFlags);
             }
 #endif
@@ -269,6 +278,21 @@ void runTransaction() {
   {{#eachNonConstantNode nodes}}
     node_{{ id }}.dirtyFlags = 0;
   {{/eachNonConstantNode}}
+
+    // Сlean errors from pulse outputs
+  {{#eachNonConstantNode nodes}}
+    {{#if patch.raisesErrors}}
+    {{#eachPulseOutput patch.outputs}}
+    if (node_{{ ../id }}.outputHasError_{{ pinKey }}) {
+      node_{{ ../id }}.outputHasError_{{ pinKey }} = false;
+#if defined(XOD_DEBUG) || defined(XOD_SIMULATION)
+      detail::printErrorToDebugSerial({{ ../id }}, node_{{ ../id }}.errorFlags);
+#endif
+    }
+    {{/eachPulseOutput}}
+    {{/if}}
+  {{/eachNonConstantNode}}
+
   {{#eachNodeUsingTimeouts nodes}}
     detail::clearStaleTimeout(&node_{{ id }});
   {{/eachNodeUsingTimeouts}}

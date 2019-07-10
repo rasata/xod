@@ -1601,7 +1601,6 @@ void runTransaction() {
 
 #if defined(XOD_DEBUG) || defined(XOD_SIMULATION)
             if (previousErrorFlags != node_6.errorFlags) {
-                // report that the node recovered from error
                 detail::printErrorToDebugSerial(6, node_6.errorFlags);
             }
 #endif
@@ -1615,6 +1614,15 @@ void runTransaction() {
     node_4.dirtyFlags = 0;
     node_5.dirtyFlags = 0;
     node_6.dirtyFlags = 0;
+
+    // Сlean errors from pulse outputs
+    if (node_6.outputHasError_DONE) {
+      node_6.outputHasError_DONE = false;
+#if defined(XOD_DEBUG) || defined(XOD_SIMULATION)
+      detail::printErrorToDebugSerial(6, node_6.errorFlags);
+#endif
+    }
+
     detail::clearStaleTimeout(&node_3);
     detail::clearStaleTimeout(&node_4);
 
