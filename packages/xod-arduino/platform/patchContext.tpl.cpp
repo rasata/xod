@@ -147,6 +147,20 @@ template<> void raiseError<output_{{ pinKey }}>(Context ctx) {
 #endif
 }
 {{/each}}
+
+void raiseError(Context ctx) {
+  {{#each outputs}}
+    ctx->_node->outputHasError_{{ pinKey }} = true;
+    {{#if isDirtyable}}
+    ctx->_node->isOutputDirty_{{ pinKey }} = true;
+    {{/if}}
+  {{/each}}
+
+#if defined(XOD_DEBUG) || defined(XOD_SIMULATION)
+    detail::printErrorToDebugSerial(ctx->_nodeId, ctx->_node->errorFlags);
+#endif
+}
+
 {{/if}}
 
 

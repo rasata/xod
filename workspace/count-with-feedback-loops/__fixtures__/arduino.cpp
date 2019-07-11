@@ -1989,6 +1989,15 @@ template<> void raiseError<output_DONE>(Context ctx) {
 #endif
 }
 
+void raiseError(Context ctx) {
+    ctx->_node->outputHasError_DONE = true;
+    ctx->_node->isOutputDirty_DONE = true;
+
+#if defined(XOD_DEBUG) || defined(XOD_SIMULATION)
+    detail::printErrorToDebugSerial(ctx->_nodeId, ctx->_node->errorFlags);
+#endif
+}
+
 void printLine(LiquidCrystal* lcd, uint8_t lineIndex, XString str) {
     lcd->setCursor(0, lineIndex);
     uint8_t whitespace = 16;
@@ -2156,6 +2165,15 @@ template<> void raiseError<output_OUT>(Context ctx) {
 #endif
 }
 
+void raiseError(Context ctx) {
+    ctx->_node->outputHasError_OUT = true;
+    ctx->_node->isOutputDirty_OUT = true;
+
+#if defined(XOD_DEBUG) || defined(XOD_SIMULATION)
+    detail::printErrorToDebugSerial(ctx->_nodeId, ctx->_node->errorFlags);
+#endif
+}
+
 template<typename InputT> uint8_t getError(Context ctx) {
     static_assert(always_false<InputT>::value,
             "Invalid input descriptor. Expected one of:" \
@@ -2286,6 +2304,15 @@ template<typename OutputT> void raiseError(Context ctx) {
 }
 
 template<> void raiseError<output_OUT>(Context ctx) {
+    ctx->_node->outputHasError_OUT = true;
+    ctx->_node->isOutputDirty_OUT = true;
+
+#if defined(XOD_DEBUG) || defined(XOD_SIMULATION)
+    detail::printErrorToDebugSerial(ctx->_nodeId, ctx->_node->errorFlags);
+#endif
+}
+
+void raiseError(Context ctx) {
     ctx->_node->outputHasError_OUT = true;
     ctx->_node->isOutputDirty_OUT = true;
 

@@ -1401,6 +1401,15 @@ template<> void raiseError<output_DONE>(Context ctx) {
 #endif
 }
 
+void raiseError(Context ctx) {
+    ctx->_node->outputHasError_DONE = true;
+    ctx->_node->isOutputDirty_DONE = true;
+
+#if defined(XOD_DEBUG) || defined(XOD_SIMULATION)
+    detail::printErrorToDebugSerial(ctx->_nodeId, ctx->_node->errorFlags);
+#endif
+}
+
 void evaluate(Context ctx) {
     if (!isInputDirty<input_UPD>(ctx))
         return;
