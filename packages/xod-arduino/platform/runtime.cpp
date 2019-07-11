@@ -98,8 +98,8 @@ void clearStaleTimeout(NodeT* node) {
         clearTimeout(node);
 }
 
-#if defined(XOD_DEBUG) || defined(XOD_SIMULATION)
 void printErrorToDebugSerial(uint16_t nodeId, uint8_t errorFlags) {
+#if defined(XOD_DEBUG) || defined(XOD_SIMULATION)
     XOD_DEBUG_SERIAL.print(F("+XOD_ERR:"));
     XOD_DEBUG_SERIAL.print(g_transactionTime);
     XOD_DEBUG_SERIAL.print(':');
@@ -108,8 +108,8 @@ void printErrorToDebugSerial(uint16_t nodeId, uint8_t errorFlags) {
     XOD_DEBUG_SERIAL.print(errorFlags, DEC);
     XOD_DEBUG_SERIAL.print('\r');
     XOD_DEBUG_SERIAL.print('\n');
-}
 #endif
+}
 
 } // namespace detail
 

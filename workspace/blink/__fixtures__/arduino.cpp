@@ -865,8 +865,8 @@ void clearStaleTimeout(NodeT* node) {
         clearTimeout(node);
 }
 
-#if defined(XOD_DEBUG) || defined(XOD_SIMULATION)
 void printErrorToDebugSerial(uint16_t nodeId, uint8_t errorFlags) {
+#if defined(XOD_DEBUG) || defined(XOD_SIMULATION)
     XOD_DEBUG_SERIAL.print(F("+XOD_ERR:"));
     XOD_DEBUG_SERIAL.print(g_transactionTime);
     XOD_DEBUG_SERIAL.print(':');
@@ -875,8 +875,8 @@ void printErrorToDebugSerial(uint16_t nodeId, uint8_t errorFlags) {
     XOD_DEBUG_SERIAL.print(errorFlags, DEC);
     XOD_DEBUG_SERIAL.print('\r');
     XOD_DEBUG_SERIAL.print('\n');
-}
 #endif
+}
 
 } // namespace detail
 
@@ -1298,7 +1298,7 @@ struct Node {
             bool outputHasError_DONE : 1;
         };
 
-      ErrorFlags errorFlags;
+        ErrorFlags errorFlags;
     };
     Logic output_DONE;
 
@@ -1395,19 +1395,11 @@ template<typename OutputT> void raiseError(Context ctx) {
 template<> void raiseError<output_DONE>(Context ctx) {
     ctx->_node->outputHasError_DONE = true;
     ctx->_node->isOutputDirty_DONE = true;
-
-#if defined(XOD_DEBUG) || defined(XOD_SIMULATION)
-    detail::printErrorToDebugSerial(ctx->_nodeId, ctx->_node->errorFlags);
-#endif
 }
 
 void raiseError(Context ctx) {
     ctx->_node->outputHasError_DONE = true;
     ctx->_node->isOutputDirty_DONE = true;
-
-#if defined(XOD_DEBUG) || defined(XOD_SIMULATION)
-    detail::printErrorToDebugSerial(ctx->_nodeId, ctx->_node->errorFlags);
-#endif
 }
 
 void evaluate(Context ctx) {
@@ -1627,9 +1619,7 @@ void runTransaction() {
     // Сlean errors from pulse outputs
     if (node_6.outputHasError_DONE) {
       node_6.outputHasError_DONE = false;
-#if defined(XOD_DEBUG) || defined(XOD_SIMULATION)
       detail::printErrorToDebugSerial(6, node_6.errorFlags);
-#endif
     }
 
     detail::clearStaleTimeout(&node_3);

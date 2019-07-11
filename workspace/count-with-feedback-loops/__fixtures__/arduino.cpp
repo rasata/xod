@@ -865,8 +865,8 @@ void clearStaleTimeout(NodeT* node) {
         clearTimeout(node);
 }
 
-#if defined(XOD_DEBUG) || defined(XOD_SIMULATION)
 void printErrorToDebugSerial(uint16_t nodeId, uint8_t errorFlags) {
+#if defined(XOD_DEBUG) || defined(XOD_SIMULATION)
     XOD_DEBUG_SERIAL.print(F("+XOD_ERR:"));
     XOD_DEBUG_SERIAL.print(g_transactionTime);
     XOD_DEBUG_SERIAL.print(':');
@@ -875,8 +875,8 @@ void printErrorToDebugSerial(uint16_t nodeId, uint8_t errorFlags) {
     XOD_DEBUG_SERIAL.print(errorFlags, DEC);
     XOD_DEBUG_SERIAL.print('\r');
     XOD_DEBUG_SERIAL.print('\n');
-}
 #endif
+}
 
 } // namespace detail
 
@@ -1850,7 +1850,7 @@ struct Node {
             bool outputHasError_DONE : 1;
         };
 
-      ErrorFlags errorFlags;
+        ErrorFlags errorFlags;
     };
     Logic output_DONE;
 
@@ -1983,19 +1983,11 @@ template<typename OutputT> void raiseError(Context ctx) {
 template<> void raiseError<output_DONE>(Context ctx) {
     ctx->_node->outputHasError_DONE = true;
     ctx->_node->isOutputDirty_DONE = true;
-
-#if defined(XOD_DEBUG) || defined(XOD_SIMULATION)
-    detail::printErrorToDebugSerial(ctx->_nodeId, ctx->_node->errorFlags);
-#endif
 }
 
 void raiseError(Context ctx) {
     ctx->_node->outputHasError_DONE = true;
     ctx->_node->isOutputDirty_DONE = true;
-
-#if defined(XOD_DEBUG) || defined(XOD_SIMULATION)
-    detail::printErrorToDebugSerial(ctx->_nodeId, ctx->_node->errorFlags);
-#endif
 }
 
 void printLine(LiquidCrystal* lcd, uint8_t lineIndex, XString str) {
@@ -2072,7 +2064,7 @@ struct Node {
             bool outputHasError_OUT : 1;
         };
 
-      ErrorFlags errorFlags;
+        ErrorFlags errorFlags;
     };
     TimeMs timeoutAt;
     Logic output_OUT;
@@ -2159,19 +2151,11 @@ template<typename OutputT> void raiseError(Context ctx) {
 template<> void raiseError<output_OUT>(Context ctx) {
     ctx->_node->outputHasError_OUT = true;
     ctx->_node->isOutputDirty_OUT = true;
-
-#if defined(XOD_DEBUG) || defined(XOD_SIMULATION)
-    detail::printErrorToDebugSerial(ctx->_nodeId, ctx->_node->errorFlags);
-#endif
 }
 
 void raiseError(Context ctx) {
     ctx->_node->outputHasError_OUT = true;
     ctx->_node->isOutputDirty_OUT = true;
-
-#if defined(XOD_DEBUG) || defined(XOD_SIMULATION)
-    detail::printErrorToDebugSerial(ctx->_nodeId, ctx->_node->errorFlags);
-#endif
 }
 
 template<typename InputT> uint8_t getError(Context ctx) {
@@ -2219,7 +2203,7 @@ struct Node {
             bool outputHasError_OUT : 1;
         };
 
-      ErrorFlags errorFlags;
+        ErrorFlags errorFlags;
     };
     TimeMs timeoutAt;
     Logic output_OUT;
@@ -2306,19 +2290,11 @@ template<typename OutputT> void raiseError(Context ctx) {
 template<> void raiseError<output_OUT>(Context ctx) {
     ctx->_node->outputHasError_OUT = true;
     ctx->_node->isOutputDirty_OUT = true;
-
-#if defined(XOD_DEBUG) || defined(XOD_SIMULATION)
-    detail::printErrorToDebugSerial(ctx->_nodeId, ctx->_node->errorFlags);
-#endif
 }
 
 void raiseError(Context ctx) {
     ctx->_node->outputHasError_OUT = true;
     ctx->_node->isOutputDirty_OUT = true;
-
-#if defined(XOD_DEBUG) || defined(XOD_SIMULATION)
-    detail::printErrorToDebugSerial(ctx->_nodeId, ctx->_node->errorFlags);
-#endif
 }
 
 template<typename InputT> uint8_t getError(Context ctx) {
@@ -2559,25 +2535,15 @@ void runTransaction() {
         if (node_24.isNodeDirty) {
             // if a defer has an error, do not evaluate it, but spread the dirtyness
             if (!node_24.errorFlags) {
-              XOD_TRACE_F("Trigger defer node #");
-              XOD_TRACE_LN(24);
+                XOD_TRACE_F("Trigger defer node #");
+                XOD_TRACE_LN(24);
 
-              xod__core__defer__pulse::ContextObject ctxObj;
-              ctxObj._node = &node_24;
-              ctxObj._isInputDirty_IN = false;
-              ctxObj._error_input_IN = 0;
+                xod__core__defer__pulse::ContextObject ctxObj;
+                ctxObj._node = &node_24;
+                ctxObj._isInputDirty_IN = false;
+                ctxObj._error_input_IN = 0;
 
-#if defined(XOD_DEBUG) || defined(XOD_SIMULATION)
-              ErrorFlags previousErrorFlags = node_24.errorFlags;
-#endif
-
-              xod__core__defer__pulse::evaluate(&ctxObj);
-
-#if defined(XOD_DEBUG) || defined(XOD_SIMULATION)
-              if (previousErrorFlags != node_24.errorFlags) {
-                  detail::printErrorToDebugSerial(24, node_24.errorFlags);
-              }
-#endif
+                xod__core__defer__pulse::evaluate(&ctxObj);
             }
 
             // mark downstream nodes dirty
@@ -2591,25 +2557,15 @@ void runTransaction() {
         if (node_25.isNodeDirty) {
             // if a defer has an error, do not evaluate it, but spread the dirtyness
             if (!node_25.errorFlags) {
-              XOD_TRACE_F("Trigger defer node #");
-              XOD_TRACE_LN(25);
+                XOD_TRACE_F("Trigger defer node #");
+                XOD_TRACE_LN(25);
 
-              xod__core__defer__boolean::ContextObject ctxObj;
-              ctxObj._node = &node_25;
-              ctxObj._isInputDirty_IN = false;
-              ctxObj._error_input_IN = 0;
+                xod__core__defer__boolean::ContextObject ctxObj;
+                ctxObj._node = &node_25;
+                ctxObj._isInputDirty_IN = false;
+                ctxObj._error_input_IN = 0;
 
-#if defined(XOD_DEBUG) || defined(XOD_SIMULATION)
-              ErrorFlags previousErrorFlags = node_25.errorFlags;
-#endif
-
-              xod__core__defer__boolean::evaluate(&ctxObj);
-
-#if defined(XOD_DEBUG) || defined(XOD_SIMULATION)
-              if (previousErrorFlags != node_25.errorFlags) {
-                  detail::printErrorToDebugSerial(25, node_25.errorFlags);
-              }
-#endif
+                xod__core__defer__boolean::evaluate(&ctxObj);
             }
 
             // mark downstream nodes dirty
@@ -3050,15 +3006,11 @@ void runTransaction() {
     // Сlean errors from pulse outputs
     if (node_23.outputHasError_DONE) {
       node_23.outputHasError_DONE = false;
-#if defined(XOD_DEBUG) || defined(XOD_SIMULATION)
       detail::printErrorToDebugSerial(23, node_23.errorFlags);
-#endif
     }
     if (node_24.outputHasError_OUT) {
       node_24.outputHasError_OUT = false;
-#if defined(XOD_DEBUG) || defined(XOD_SIMULATION)
       detail::printErrorToDebugSerial(24, node_24.errorFlags);
-#endif
     }
 
     detail::clearStaleTimeout(&node_7);

@@ -114,25 +114,15 @@ void runTransaction() {
         if (node_{{ id }}.isNodeDirty) {
             // if a defer has an error, do not evaluate it, but spread the dirtyness
             if (!node_{{ id }}.errorFlags) {
-              XOD_TRACE_F("Trigger defer node #");
-              XOD_TRACE_LN({{ id }});
+                XOD_TRACE_F("Trigger defer node #");
+                XOD_TRACE_LN({{ id }});
 
-              {{ns patch }}::ContextObject ctxObj;
-              ctxObj._node = &node_{{ id }};
-              ctxObj._isInputDirty_IN = false;
-              ctxObj._error_input_IN = 0;
+                {{ns patch }}::ContextObject ctxObj;
+                ctxObj._node = &node_{{ id }};
+                ctxObj._isInputDirty_IN = false;
+                ctxObj._error_input_IN = 0;
 
-#if defined(XOD_DEBUG) || defined(XOD_SIMULATION)
-              ErrorFlags previousErrorFlags = node_{{ id }}.errorFlags;
-#endif
-
-              {{ ns patch }}::evaluate(&ctxObj);
-
-#if defined(XOD_DEBUG) || defined(XOD_SIMULATION)
-              if (previousErrorFlags != node_{{ id }}.errorFlags) {
-                  detail::printErrorToDebugSerial({{ id }}, node_{{ id }}.errorFlags);
-              }
-#endif
+                {{ ns patch }}::evaluate(&ctxObj);
             }
 
             // mark downstream nodes dirty
@@ -285,9 +275,7 @@ void runTransaction() {
     {{#eachPulseOutput patch.outputs}}
     if (node_{{ ../id }}.outputHasError_{{ pinKey }}) {
       node_{{ ../id }}.outputHasError_{{ pinKey }} = false;
-#if defined(XOD_DEBUG) || defined(XOD_SIMULATION)
       detail::printErrorToDebugSerial({{ ../id }}, node_{{ ../id }}.errorFlags);
-#endif
     }
     {{/eachPulseOutput}}
     {{/if}}

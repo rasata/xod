@@ -11,7 +11,7 @@ struct Node {
           {{/each}}
         };
 
-      ErrorFlags errorFlags;
+        ErrorFlags errorFlags;
     };
   {{/if}}
   {{#if usesTimeouts}}
@@ -141,10 +141,6 @@ template<> void raiseError<output_{{ pinKey }}>(Context ctx) {
     {{#if isDirtyable}}
     ctx->_node->isOutputDirty_{{ pinKey }} = true;
     {{/if}}
-
-#if defined(XOD_DEBUG) || defined(XOD_SIMULATION)
-    detail::printErrorToDebugSerial(ctx->_nodeId, ctx->_node->errorFlags);
-#endif
 }
 {{/each}}
 
@@ -155,10 +151,6 @@ void raiseError(Context ctx) {
     ctx->_node->isOutputDirty_{{ pinKey }} = true;
     {{/if}}
   {{/each}}
-
-#if defined(XOD_DEBUG) || defined(XOD_SIMULATION)
-    detail::printErrorToDebugSerial(ctx->_nodeId, ctx->_node->errorFlags);
-#endif
 }
 
 {{/if}}
