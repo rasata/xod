@@ -140,25 +140,39 @@ const updateWatchNodeValues = R.curry((messageList, state) => {
   )(messageList);
 });
 
+/* eslint-disable no-bitwise */
+const filterPinKeysByBitmask = R.curry((pinKeys, bitmask) =>
+  R.addIndex(R.filter)((val, idx) => bitmask & (1 << idx), pinKeys)
+);
+/* eslint-enable no-bitwise */
+
 const updateInteractiveNodeErrorCodes = R.curry((messageList, state) => {
-  const MapToRekey = R.prop('nodeIdsMap', state);
-  return R.compose(
-    newValues =>
-      R.over(
-        R.lensProp('interactiveNodeErrorCodes'),
-        R.compose(R.reject(R.equals(0)), R.merge(R.__, newValues)),
-        state
-      ),
-    renameKeys(MapToRekey),
-    R.map(
-      R.reduce((acc, val) => {
-        const errorCode = parseInt(val.content, 10);
-        return errorCode > acc ? errorCode : acc;
-      }, 0)
-    ),
-    R.groupBy(R.prop('nodeId')),
-    R.filter(isXodErrorMessage)
-  )(messageList);
+  const nodeIdsMap = R.prop('nodeIdsMap', state);
+  const pinKeysByNodeId = R.prop('nodePinKeysMap', state);
+  return R.over(
+    R.lensProp('interactiveNodeErrorCodes'),
+    oldValues =>
+      R.compose(
+        R.reject(R.isEmpty),
+        R.merge(oldValues),
+        R.reduce((acc, val) => {
+          const bitmask = parseInt(val.content, 10);
+          const originalNodeId = nodeIdsMap[val.nodeId];
+          const filteredPinKeys = filterPinKeysByBitmask(
+            pinKeysByNodeId[originalNodeId],
+            bitmask
+          );
+          return R.assoc(originalNodeId, filteredPinKeys, acc);
+        }, {}),
+        R.values,
+        R.tap(a => console.log('updateInteractiveNodeErrorCodes > after >', a)),
+        R.map(R.last), // the latest error message for each NodeId
+        R.tap(a => console.log('updateInteractiveNodeErrorCodes >', a)),
+        R.groupBy(R.prop('nodeId')),
+        R.filter(isXodErrorMessage)
+      )(messageList),
+    state
+  );
 });
 
 const showDebuggerPane = R.assoc('isVisible', true);
@@ -556,6 +570,7 @@ export default (state = initialState, action) => {
         R.assoc('isOutdated', false),
         R.assoc('uploadProgress', null),
         R.assoc('nodeIdsMap', invertedNodeIdsMap),
+        R.assoc('nodePinKeysMap', action.payload.nodePinKeysMap),
         rekeyAndAssocPinsAffectedByErrorRaisers(
           invertedNodeIdsMap,
           action.payload.pinsAffectedByErrorRaisers

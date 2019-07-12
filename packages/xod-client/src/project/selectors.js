@@ -283,23 +283,39 @@ const addErrorCode = R.curry((interactiveNodeErrorCodes, node) => {
   return R.assoc('raisedErrorCode', errorCode, node);
 });
 
+// TODO: Add Signature
+// :: ... -> [[PinKey, NodeId]]
+const pickAffectedPinPairs = R.curry(
+  (interactiveNodeErrorCodes, pinsAffectedByErrorRaisers) =>
+    R.compose(
+      R.unnest,
+      R.unnest,
+      R.map(R.values),
+      R.values,
+      R.mapObjIndexed((errors, nodeId) =>
+        R.pick(interactiveNodeErrorCodes[nodeId], errors)
+      ),
+      R.pick(R.keys(interactiveNodeErrorCodes))
+    )(pinsAffectedByErrorRaisers)
+);
+
+// TODO: Update Signature
 // :: Map NodeId ErrorCode -> Map NodeId [NodeId] -> NodeId -> Boolean
 const isNodeIdAffectedByErrorRaiser = R.curry(
   (interactiveNodeErrorCodes, pinsAffectedByErrorRaisers, nodeId) => {
     // :: [[PinKey, NodeId]]
-    const erroredPairs = R.compose(
-      R.unnest,
-      R.values,
-      R.pick(R.__, pinsAffectedByErrorRaisers),
-      R.keys
-    )(interactiveNodeErrorCodes);
+    const erroredPairs = pickAffectedPinPairs(
+      interactiveNodeErrorCodes,
+      pinsAffectedByErrorRaisers
+    );
 
     return R.any(R.propEq(1, nodeId), erroredPairs);
   }
 );
 
+// TODO: Update Signature
 // :: Map NodeId ErrorCode -> Boolean
-const isNodeIdRaisesError = R.flip(R.has);
+const isPinKeyOfNodeIdRaisesError = R.flip(R.has);
 
 const markNodeAffectedByErrorRaiser = R.curry(
   (currentPatch, interactiveNodeErrorCodes, pinsAffectedByErrorRaisers, node) =>
@@ -333,30 +349,28 @@ const markPinsAffectedByErrorRaisers = R.curry(
   ) => {
     const maybeNodesPatch = XP.getPatchByPath(node.type, project);
     // :: [[PinKey, NodeId]]
-    const erroredPairs = R.compose(
-      R.unnest,
-      R.values,
-      R.pick(R.__, pinsAffectedByErrorRaisers),
-      R.keys
-    )(interactiveNodeErrorCodes);
+    const erroredPairs = pickAffectedPinPairs(
+      interactiveNodeErrorCodes,
+      pinsAffectedByErrorRaisers
+    );
 
     return foldMaybe(
       node,
       nodesPatch =>
-        R.compose(
-          R.when(
-            R.both(
-              R.pipe(
-                R.prop('id'),
-                isNodeIdRaisesError(interactiveNodeErrorCodes)
+        R.over(
+          R.lensProp('pins'),
+          R.map(pin =>
+            R.compose(
+              R.when(
+                () =>
+                  R.compose(
+                    R.gt(R.__, 0),
+                    R.length,
+                    R.pathOr([], [node.id, pin.key])
+                  )(interactiveNodeErrorCodes) &&
+                  XP.isPatchNotImplementedInXod(nodesPatch),
+                R.assoc('isAffectedByErrorRaiser', true)
               ),
-              () => XP.isPatchNotImplementedInXod(nodesPatch)
-            ),
-            markAllOutputPinsAffectedByErrorRaisers
-          ),
-          R.over(
-            R.lensProp('pins'),
-            R.map(pin =>
               R.when(
                 () =>
                   R.any(
@@ -364,10 +378,11 @@ const markPinsAffectedByErrorRaisers = R.curry(
                     erroredPairs
                   ),
                 R.assoc('isAffectedByErrorRaiser', true)
-              )(pin)
-            )
-          )
-        )(node),
+              )
+            )(pin)
+          ),
+          node
+        ),
       maybeNodesPatch
     );
   }

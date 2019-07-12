@@ -187,9 +187,13 @@ export const getPinsAffectedByErrorRaisersForCurrentChunk = createMemoizedSelect
         if (tabId !== DEBUGGER_TAB_ID) return {};
         const nodeIdPath = getChunksPath(activeIndex, chunks);
 
-        return R.compose(
-          R.map(R.map(R.over(R.lensIndex(1), R.replace(nodeIdPath, '')))),
-          R.map(R.filter(R.compose(R.startsWith(nodeIdPath), R.nth(1))))
+        return R.map(
+          R.map(
+            R.compose(
+              R.map(R.over(R.lensIndex(1), R.replace(nodeIdPath, ''))),
+              R.filter(R.compose(R.startsWith(nodeIdPath), R.nth(1)))
+            )
+          )
         )(pinPairs);
       },
       maybeTabId
