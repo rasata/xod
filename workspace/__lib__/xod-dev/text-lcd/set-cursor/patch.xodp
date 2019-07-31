@@ -1,0 +1,79 @@
+{
+  "description": "Position the LCD cursor; that is, set the location at which subsequent text written to the LCD will be displayed.",
+  "nodes": [
+    {
+      "description": "Position the cursor",
+      "id": "B1bnV2yJ7r",
+      "label": "DO",
+      "position": {
+        "units": "slots",
+        "x": 6,
+        "y": 0
+      },
+      "type": "xod/patch-nodes/input-pulse"
+    },
+    {
+      "description": "Fires when cursor is positioned",
+      "id": "BkGhE21yQB",
+      "label": "OK",
+      "position": {
+        "units": "slots",
+        "x": 2,
+        "y": 2
+      },
+      "type": "xod/patch-nodes/output-pulse"
+    },
+    {
+      "id": "H1fBnyyXB",
+      "position": {
+        "units": "slots",
+        "x": 0,
+        "y": 1
+      },
+      "type": "xod/patch-nodes/abstract"
+    },
+    {
+      "id": "HJlUhJy7H",
+      "label": "DEV'",
+      "position": {
+        "units": "slots",
+        "x": 0,
+        "y": 2
+      },
+      "type": "xod/patch-nodes/output-t1"
+    },
+    {
+      "description": "Row index. Starts from 0.",
+      "id": "Hy7hNn1kQH",
+      "label": "ROW",
+      "position": {
+        "units": "slots",
+        "x": 2,
+        "y": 0
+      },
+      "type": "xod/patch-nodes/input-number"
+    },
+    {
+      "description": "Position in the row. Starts from 0.",
+      "id": "r1EnVhyJmH",
+      "label": "POS",
+      "position": {
+        "units": "slots",
+        "x": 4,
+        "y": 0
+      },
+      "type": "xod/patch-nodes/input-number"
+    },
+    {
+      "description": "A text LCD device",
+      "id": "rkOSnkJQr",
+      "label": "DEV",
+      "position": {
+        "units": "slots",
+        "x": 0,
+        "y": 0
+      },
+      "type": "xod/patch-nodes/input-t1"
+    }
+  ]
+}
