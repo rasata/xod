@@ -1,0 +1,152 @@
+{
+  "description": "Delays the changing of the `EN` value to false for a specified time. Switching from false to true sets true in the `ACT` pin instantly.",
+  "links": [
+    {
+      "id": "B1WAueIMr",
+      "input": {
+        "nodeId": "Sk56ueUfS",
+        "pinKey": "__in__"
+      },
+      "output": {
+        "nodeId": "Byxiiue8MB",
+        "pinKey": "Bk4gU0drwJ-"
+      }
+    },
+    {
+      "id": "ByWisulLfS",
+      "input": {
+        "nodeId": "Byxiiue8MB",
+        "pinKey": "SkSuD6LMb"
+      },
+      "output": {
+        "nodeId": "BJss_xIMB",
+        "pinKey": "BklspuwpW"
+      }
+    },
+    {
+      "id": "SkgROgIGB",
+      "input": {
+        "nodeId": "By1A_gLfB",
+        "pinKey": "__in__"
+      },
+      "output": {
+        "nodeId": "Byxiiue8MB",
+        "pinKey": "HkU3vNoTW"
+      }
+    },
+    {
+      "id": "SyWyFeUGB",
+      "input": {
+        "nodeId": "Byxiiue8MB",
+        "pinKey": "H1mlUC_HDJZ"
+      },
+      "output": {
+        "nodeId": "HkkyKlLGB",
+        "pinKey": "__out__"
+      }
+    },
+    {
+      "id": "r1I3OgUzB",
+      "input": {
+        "nodeId": "BJss_xIMB",
+        "pinKey": "SkJ46dw6-"
+      },
+      "output": {
+        "nodeId": "HJEh_lLGH",
+        "pinKey": "__out__"
+      }
+    },
+    {
+      "id": "rk03_gIMr",
+      "input": {
+        "nodeId": "Byxiiue8MB",
+        "pinKey": "Skre8ROSv1-"
+      },
+      "output": {
+        "nodeId": "Sk3hdlIMr",
+        "pinKey": "__out__"
+      }
+    }
+  ],
+  "nodes": [
+    {
+      "id": "BJss_xIMB",
+      "position": {
+        "units": "slots",
+        "x": 4,
+        "y": 1
+      },
+      "type": "@/continuously-pausable"
+    },
+    {
+      "description": "Outputs true when the `EN` pin has true value or overrun is in the progress",
+      "id": "By1A_gLfB",
+      "label": "ACT",
+      "position": {
+        "units": "slots",
+        "x": 4,
+        "y": 3
+      },
+      "type": "xod/patch-nodes/output-boolean"
+    },
+    {
+      "boundLiterals": {
+        "Skre8ROSv1-": "3"
+      },
+      "id": "Byxiiue8MB",
+      "position": {
+        "units": "slots",
+        "x": 3,
+        "y": 2
+      },
+      "type": "@/delay"
+    },
+    {
+      "description": "Turns on the overrun on true",
+      "id": "HJEh_lLGH",
+      "label": "EN",
+      "position": {
+        "units": "slots",
+        "x": 4,
+        "y": 0
+      },
+      "type": "xod/patch-nodes/input-boolean"
+    },
+    {
+      "description": "Resets the overrun timer",
+      "id": "HkkyKlLGB",
+      "label": "RST",
+      "position": {
+        "units": "slots",
+        "x": 5,
+        "y": 0
+      },
+      "type": "xod/patch-nodes/input-pulse"
+    },
+    {
+      "boundLiterals": {
+        "__out__": "1"
+      },
+      "description": "Time to overrun in seconds",
+      "id": "Sk3hdlIMr",
+      "label": "T",
+      "position": {
+        "units": "slots",
+        "x": 3,
+        "y": 0
+      },
+      "type": "xod/patch-nodes/input-number"
+    },
+    {
+      "description": "Pulses once the overrun is over",
+      "id": "Sk56ueUfS",
+      "label": "DONE",
+      "position": {
+        "units": "slots",
+        "x": 3,
+        "y": 3
+      },
+      "type": "xod/patch-nodes/output-pulse"
+    }
+  ]
+}
