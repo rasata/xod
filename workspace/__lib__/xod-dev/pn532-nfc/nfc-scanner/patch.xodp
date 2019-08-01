@@ -2,28 +2,6 @@
   "description": "A quick-start node which represents an RFID/NFC module.\nInitializes the module and reads the UID of a detected card\n\nPossible errors:\n— Initialization error",
   "links": [
     {
-      "id": "BJbxr0fvvMB",
-      "input": {
-        "nodeId": "rJpBCMPPGr",
-        "pinKey": "rytEHf3vm"
-      },
-      "output": {
-        "nodeId": "rJQSCzDPfB",
-        "pinKey": "ByHmL0uHPk-"
-      }
-    },
-    {
-      "id": "ByweSRzvvfH",
-      "input": {
-        "nodeId": "B1vSAzDPGr",
-        "pinKey": "__in__"
-      },
-      "output": {
-        "nodeId": "rJpBCMPPGr",
-        "pinKey": "Sk3BHM2Pm"
-      }
-    },
-    {
       "id": "ByyeSAzPPfS",
       "input": {
         "nodeId": "rJpBCMPPGr",
@@ -35,25 +13,14 @@
       }
     },
     {
-      "id": "HJegSAMvPzB",
+      "id": "H14Rtql7S",
       "input": {
-        "nodeId": "rkBrCGvvGS",
-        "pinKey": "B1P1nFwaM"
+        "nodeId": "HkZRKqlXB",
+        "pinKey": "__in__"
       },
       "output": {
-        "nodeId": "SyFSCMPDGr",
-        "pinKey": "HkyxURuSPyW"
-      }
-    },
-    {
-      "id": "HJseB0MvwfS",
-      "input": {
-        "nodeId": "rJQSCzDPfB",
-        "pinKey": "ByU7LRuSPkW"
-      },
-      "output": {
-        "nodeId": "SJNHAfDvfH",
-        "pinKey": "HkCoxf2DX"
+        "nodeId": "rJpBCMPPGr",
+        "pinKey": "Sk3BHM2Pm"
       }
     },
     {
@@ -123,6 +90,39 @@
       }
     },
     {
+      "id": "SybaKqlQB",
+      "input": {
+        "nodeId": "rJpBCMPPGr",
+        "pinKey": "rytEHf3vm"
+      },
+      "output": {
+        "nodeId": "r1PtK9lmH",
+        "pinKey": "SJVql9lXr"
+      }
+    },
+    {
+      "id": "Syo3KqlQB",
+      "input": {
+        "nodeId": "r1PtK9lmH",
+        "pinKey": "ByFqg5eXr"
+      },
+      "output": {
+        "nodeId": "SJeb7Pwzr",
+        "pinKey": "BklspuwpW"
+      }
+    },
+    {
+      "id": "Syu3K5x7H",
+      "input": {
+        "nodeId": "r1PtK9lmH",
+        "pinKey": "HkFFgqx7B"
+      },
+      "output": {
+        "nodeId": "SJNHAfDvfH",
+        "pinKey": "HkCoxf2DX"
+      }
+    },
+    {
       "id": "r1nxrRGwvfB",
       "input": {
         "nodeId": "SJNHAfDvfH",
@@ -156,25 +156,14 @@
       }
     },
     {
-      "id": "rkVgS0GwDMr",
+      "id": "rySRF9lQS",
       "input": {
-        "nodeId": "rJQSCzDPfB",
-        "pinKey": "ryv7IRdSP1b"
+        "nodeId": "B1vSAzDPGr",
+        "pinKey": "__in__"
       },
       "output": {
-        "nodeId": "rkBrCGvvGS",
-        "pinKey": "OkPg7GDaW"
-      }
-    },
-    {
-      "id": "rkz-mwwzS",
-      "input": {
-        "nodeId": "rkBrCGvvGS",
-        "pinKey": "SJ-1mZPTz"
-      },
-      "output": {
-        "nodeId": "SJeb7Pwzr",
-        "pinKey": "BklspuwpW"
+        "nodeId": "HkZRKqlXB",
+        "pinKey": "__out__"
       }
     },
     {
@@ -225,7 +214,7 @@
       "label": "ACK",
       "position": {
         "units": "slots",
-        "x": 8,
+        "x": 7,
         "y": 5
       },
       "type": "xod/patch-nodes/output-pulse"
@@ -246,10 +235,19 @@
       "label": "DEV",
       "position": {
         "units": "slots",
-        "x": 7,
+        "x": 6,
         "y": 2
       },
       "type": "xod/patch-nodes/from-bus"
+    },
+    {
+      "id": "HkZRKqlXB",
+      "position": {
+        "units": "slots",
+        "x": 0,
+        "y": 4
+      },
+      "type": "xod/patch-nodes/jumper"
     },
     {
       "id": "SJNHAfDvfH",
@@ -264,8 +262,8 @@
       "id": "SJeb7Pwzr",
       "position": {
         "units": "slots",
-        "x": 3,
-        "y": 2
+        "x": 5,
+        "y": 1
       },
       "type": "xod/core/continuously-pausable"
     },
@@ -304,6 +302,15 @@
       "type": "xod/patch-nodes/input-port"
     },
     {
+      "id": "r1PtK9lmH",
+      "position": {
+        "units": "slots",
+        "x": 3,
+        "y": 3
+      },
+      "type": "xod/core/wait-all"
+    },
+    {
       "id": "rJMBAGwPzB",
       "label": "DEV",
       "position": {
@@ -314,31 +321,13 @@
       "type": "xod/patch-nodes/from-bus"
     },
     {
-      "id": "rJQSCzDPfB",
-      "position": {
-        "units": "slots",
-        "x": 5,
-        "y": 3
-      },
-      "type": "xod/core/any"
-    },
-    {
       "id": "rJpBCMPPGr",
       "position": {
         "units": "slots",
-        "x": 7,
+        "x": 6,
         "y": 3
       },
       "type": "@/pair-tag"
-    },
-    {
-      "id": "rkBrCGvvGS",
-      "position": {
-        "units": "slots",
-        "x": 3,
-        "y": 3
-      },
-      "type": "xod/core/gate"
     },
     {
       "id": "ryiBAMDwMS",
