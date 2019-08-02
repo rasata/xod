@@ -14,7 +14,7 @@
     {
       "description": "Fires when LCD is cleared",
       "id": "H1fihUlkmS",
-      "label": "OK",
+      "label": "DONE",
       "position": {
         "units": "slots",
         "x": 2,

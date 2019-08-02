@@ -25,7 +25,7 @@
     {
       "description": "Fires when backlight is updated",
       "id": "S1Y8yWRGr",
-      "label": "OK",
+      "label": "DONE",
       "position": {
         "units": "slots",
         "x": 2,

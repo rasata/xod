@@ -25,7 +25,7 @@
     {
       "description": "Fires when the allocated area is updated",
       "id": "S1zKHHSx7H",
-      "label": "OK",
+      "label": "DONE",
       "position": {
         "units": "slots",
         "x": 2,
@@ -87,6 +87,9 @@
       "type": "xod/patch-nodes/input-string"
     },
     {
+      "boundLiterals": {
+        "__out__": "+Inf"
+      },
       "description": "The length of the allocated area on the LCD screen.",
       "id": "rJ38HSxmH",
       "label": "LEN",

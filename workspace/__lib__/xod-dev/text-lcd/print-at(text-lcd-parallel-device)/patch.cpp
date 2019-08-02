@@ -22,15 +22,18 @@ void evaluate(Context ctx) {
         XString str = getValue<input_VAL>(ctx);
         uint8_t row = (uint8_t) getValue<input_ROW>(ctx);
         uint8_t pos = (uint8_t) getValue<input_POS>(ctx);
-        uint8_t len = (uint8_t) getValue<input_LEN>(ctx);
 
-        if (row < 0 || row >= t.rows || pos < 0 || pos >= t.cols || pos + len > t.cols) {
-            raiseError<output_OK>(ctx);
+        Number _len = getValue<input_LEN>(ctx);
+        uint8_t restLen = t.cols - pos;
+        uint8_t len = (_len > restLen) ? restLen : (uint8_t) _len;
+
+        if (row < 0 || row >= t.rows || pos < 0 || pos >= t.cols) {
+            raiseError<output_DONE>(ctx);
             return;
         }
 
         printAt(t.lcd, row, pos, len, str);
-        emitValue<output_OK>(ctx, 1);
+        emitValue<output_DONE>(ctx, 1);
     }
 
     emitValue<output_DEVU0027>(ctx, t);

@@ -14,7 +14,7 @@
     {
       "description": "Fires when the allocated area is updated",
       "id": "H1M4bPBeQr",
-      "label": "OK",
+      "label": "DONE",
       "position": {
         "units": "slots",
         "x": 2,
@@ -86,6 +86,9 @@
       "type": "@/output-text-lcd-i2c-device"
     },
     {
+      "boundLiterals": {
+        "__out__": "+Inf"
+      },
       "description": "The length of the allocated area on the LCD screen.",
       "id": "ryvVZwBeQr",
       "label": "LEN",

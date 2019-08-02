@@ -2,17 +2,6 @@
   "description": "Drives a text LCD screen with HD44780 chip.",
   "links": [
     {
-      "id": "B16nP7HyQH",
-      "input": {
-        "nodeId": "ryGnDmHkQS",
-        "pinKey": "ryIMweJmr"
-      },
-      "output": {
-        "nodeId": "HyW2P7ByQS",
-        "pinKey": "BkgzMPlk7r"
-      }
-    },
-    {
       "id": "BJiHXBkmr",
       "input": {
         "nodeId": "BJFS7HyQB",
@@ -21,6 +10,17 @@
       "output": {
         "nodeId": "ryHL2GHyQS",
         "pinKey": "__out__"
+      }
+    },
+    {
+      "id": "BkMrm0ZQB",
+      "input": {
+        "nodeId": "SyA47CZmB",
+        "pinKey": "r1StrSrl7S"
+      },
+      "output": {
+        "nodeId": "BJFS7HyQB",
+        "pinKey": "Skzk0Fm1mH"
       }
     },
     {
@@ -35,17 +35,6 @@
       }
     },
     {
-      "id": "HJvDKr1Qr",
-      "input": {
-        "nodeId": "HyW2P7ByQS",
-        "pinKey": "Hk9zDekmr"
-      },
-      "output": {
-        "nodeId": "r1fwKS1Xr",
-        "pinKey": "BkV5xRCpE"
-      }
-    },
-    {
       "id": "HJzOFSkmr",
       "input": {
         "nodeId": "HJg2vQByQS",
@@ -57,36 +46,14 @@
       }
     },
     {
-      "id": "HkadmrkXS",
+      "id": "Hk-0V7RWmH",
       "input": {
-        "nodeId": "HyW2P7ByQS",
-        "pinKey": "ryIMweJmr"
+        "nodeId": "rJgCVmRZXr",
+        "pinKey": "r1StrSrl7S"
       },
       "output": {
-        "nodeId": "BJFS7HyQB",
-        "pinKey": "Skzk0Fm1mH"
-      }
-    },
-    {
-      "id": "HkuFXB1XB",
-      "input": {
-        "nodeId": "rkXhPXHyXS",
-        "pinKey": "ByU7LRuSPkW"
-      },
-      "output": {
-        "nodeId": "ryGnDmHkQS",
-        "pinKey": "SkZMGvekQB"
-      }
-    },
-    {
-      "id": "HkvtXSJmB",
-      "input": {
-        "nodeId": "rkXhPXHyXS",
-        "pinKey": "ryv7IRdSP1b"
-      },
-      "output": {
-        "nodeId": "HyW2P7ByQS",
-        "pinKey": "SkZMGvekQB"
+        "nodeId": "SyA47CZmB",
+        "pinKey": "BygFrrHgXr"
       }
     },
     {
@@ -98,6 +65,17 @@
       "output": {
         "nodeId": "rkVLnGSJQS",
         "pinKey": "__out__"
+      }
+    },
+    {
+      "id": "HyVUQAb7B",
+      "input": {
+        "nodeId": "rkXhPXHyXS",
+        "pinKey": "ByU7LRuSPkW"
+      },
+      "output": {
+        "nodeId": "rJgCVmRZXr",
+        "pinKey": "S1zKHHSx7H"
       }
     },
     {
@@ -123,6 +101,28 @@
       }
     },
     {
+      "id": "S1MIX0bQr",
+      "input": {
+        "nodeId": "rkXhPXHyXS",
+        "pinKey": "ryv7IRdSP1b"
+      },
+      "output": {
+        "nodeId": "SyA47CZmB",
+        "pinKey": "S1zKHHSx7H"
+      }
+    },
+    {
+      "id": "SJxLXRb7H",
+      "input": {
+        "nodeId": "rJgCVmRZXr",
+        "pinKey": "rJ-trBSlmB"
+      },
+      "output": {
+        "nodeId": "r1_vFHJ7H",
+        "pinKey": "BkV5xRCpE"
+      }
+    },
+    {
       "id": "SkIwYH1mH",
       "input": {
         "nodeId": "BJ3v7BymS",
@@ -145,14 +145,14 @@
       }
     },
     {
-      "id": "SyldYBkQS",
+      "id": "SkaSmR-XB",
       "input": {
-        "nodeId": "ryGnDmHkQS",
-        "pinKey": "Hk9zDekmr"
+        "nodeId": "SyA47CZmB",
+        "pinKey": "SJKHrSeQH"
       },
       "output": {
-        "nodeId": "r1_vFHJ7H",
-        "pinKey": "BkV5xRCpE"
+        "nodeId": "BJ3v7BymS",
+        "pinKey": "H1fx68wzB"
       }
     },
     {
@@ -164,6 +164,17 @@
       "output": {
         "nodeId": "HyjEmHkmB",
         "pinKey": "__out__"
+      }
+    },
+    {
+      "id": "r1WUXRZXS",
+      "input": {
+        "nodeId": "rJgCVmRZXr",
+        "pinKey": "SJKHrSeQH"
+      },
+      "output": {
+        "nodeId": "HJg2vQByQS",
+        "pinKey": "H1fx68wzB"
       }
     },
     {
@@ -189,14 +200,14 @@
       }
     },
     {
-      "id": "ryCnD7Hkmr",
+      "id": "rJhr70bXH",
       "input": {
-        "nodeId": "ryGnDmHkQS",
-        "pinKey": "B1GGMPlyQr"
+        "nodeId": "SyA47CZmB",
+        "pinKey": "rJ-trBSlmB"
       },
       "output": {
-        "nodeId": "HJg2vQByQS",
-        "pinKey": "H1fx68wzB"
+        "nodeId": "r1fwKS1Xr",
+        "pinKey": "BkV5xRCpE"
       }
     },
     {
@@ -208,17 +219,6 @@
       "output": {
         "nodeId": "HJInzryQr",
         "pinKey": "__out__"
-      }
-    },
-    {
-      "id": "ryn2wQH1mB",
-      "input": {
-        "nodeId": "HyW2P7ByQS",
-        "pinKey": "B1GGMPlyQr"
-      },
-      "output": {
-        "nodeId": "BJ3v7BymS",
-        "pinKey": "H1fx68wzB"
       }
     },
     {
@@ -238,7 +238,7 @@
       "id": "BJ3v7BymS",
       "position": {
         "units": "slots",
-        "x": 12,
+        "x": 14,
         "y": 2
       },
       "type": "xod/core/act"
@@ -280,7 +280,7 @@
       "label": "L2",
       "position": {
         "units": "slots",
-        "x": 15,
+        "x": 19,
         "y": 0
       },
       "type": "xod/patch-nodes/input-string"
@@ -289,19 +289,10 @@
       "id": "HJg2vQByQS",
       "position": {
         "units": "slots",
-        "x": 16,
+        "x": 20,
         "y": 2
       },
       "type": "xod/core/act"
-    },
-    {
-      "id": "HyW2P7ByQS",
-      "position": {
-        "units": "slots",
-        "x": 9,
-        "y": 3
-      },
-      "type": "@/print-row"
     },
     {
       "boundLiterals": {
@@ -312,7 +303,7 @@
       "label": "ACT",
       "position": {
         "units": "slots",
-        "x": 17,
+        "x": 21,
         "y": 0
       },
       "type": "xod/patch-nodes/input-boolean"
@@ -327,6 +318,15 @@
         "y": 0
       },
       "type": "xod/patch-nodes/input-port"
+    },
+    {
+      "id": "SyA47CZmB",
+      "position": {
+        "units": "slots",
+        "x": 9,
+        "y": 3
+      },
+      "type": "@/print-at"
     },
     {
       "description": "Fires when write is done",
@@ -357,7 +357,7 @@
       "id": "r1_vFHJ7H",
       "position": {
         "units": "slots",
-        "x": 15,
+        "x": 19,
         "y": 1
       },
       "type": "xod/core/if-error"
@@ -373,6 +373,18 @@
         "y": 1
       },
       "type": "xod/core/if-error"
+    },
+    {
+      "boundLiterals": {
+        "Bk4KSSrxXr": "1"
+      },
+      "id": "rJgCVmRZXr",
+      "position": {
+        "units": "slots",
+        "x": 15,
+        "y": 3
+      },
+      "type": "@/print-at"
     },
     {
       "description": "Board GPIO port with LCD D7 pin",
@@ -404,18 +416,6 @@
         "y": 4
       },
       "type": "xod/core/any"
-    },
-    {
-      "boundLiterals": {
-        "Sy_rOlJ7H": "1"
-      },
-      "id": "ryGnDmHkQS",
-      "position": {
-        "units": "slots",
-        "x": 13,
-        "y": 3
-      },
-      "type": "@/print-row"
     },
     {
       "description": "Board GPIO port with LCD RS pin",

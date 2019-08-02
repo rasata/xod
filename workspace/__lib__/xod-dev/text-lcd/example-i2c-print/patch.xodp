@@ -1,6 +1,17 @@
 {
   "links": [
     {
+      "id": "B15KV6WQH",
+      "input": {
+        "nodeId": "HJeIFN6bQB",
+        "pinKey": "r1StrSrl7S"
+      },
+      "output": {
+        "nodeId": "SJ3uV6-Xr",
+        "pinKey": "BygFrrHgXr"
+      }
+    },
+    {
       "id": "B1KQYlk7B",
       "input": {
         "nodeId": "B1iMYgyQr",
@@ -12,25 +23,25 @@
       }
     },
     {
-      "id": "Bk-gGHNymB",
+      "id": "B1lYN6W7r",
       "input": {
-        "nodeId": "B1xGrVy7r",
-        "pinKey": "Hk9zDekmr"
+        "nodeId": "SJ3uV6-Xr",
+        "pinKey": "rJ-trBSlmB"
       },
       "output": {
-        "nodeId": "r1elGrNy7B",
+        "nodeId": "B1zWHN17H",
         "pinKey": "H1wh06BEW"
       }
     },
     {
-      "id": "BkWfBNJmB",
+      "id": "BJVaFETbQB",
       "input": {
-        "nodeId": "B1xGrVy7r",
-        "pinKey": "ryIMweJmr"
+        "nodeId": "rkMaY4a-7r",
+        "pinKey": "rJ-trBSlmB"
       },
       "output": {
-        "nodeId": "H100_QJ7B",
-        "pinKey": "BkgzMPlk7r"
+        "nodeId": "SyWTKV6-7S",
+        "pinKey": "H1wh06BEW"
       }
     },
     {
@@ -45,21 +56,10 @@
       }
     },
     {
-      "id": "ByqZHE1Xr",
+      "id": "HJ0uV6Z7H",
       "input": {
-        "nodeId": "H100_QJ7B",
-        "pinKey": "Hk9zDekmr"
-      },
-      "output": {
-        "nodeId": "HJ_Zr417H",
-        "pinKey": "H1wh06BEW"
-      }
-    },
-    {
-      "id": "SJBUYe17S",
-      "input": {
-        "nodeId": "HJt4tl1QS",
-        "pinKey": "ryIMweJmr"
+        "nodeId": "SJ3uV6-Xr",
+        "pinKey": "r1StrSrl7S"
       },
       "output": {
         "nodeId": "B1iMYgyQr",
@@ -67,47 +67,47 @@
       }
     },
     {
-      "id": "Sk4QB4yQr",
+      "id": "HkHTYNTZQH",
       "input": {
-        "nodeId": "r1kXSN17r",
-        "pinKey": "Hk9zDekmr"
+        "nodeId": "rkMaY4a-7r",
+        "pinKey": "r1StrSrl7S"
       },
       "output": {
-        "nodeId": "ryMQBNyQr",
+        "nodeId": "BJlpYNTbmS",
+        "pinKey": "BygFrrHgXr"
+      }
+    },
+    {
+      "id": "Hkb9NTZQB",
+      "input": {
+        "nodeId": "BJlpYNTbmS",
+        "pinKey": "r1StrSrl7S"
+      },
+      "output": {
+        "nodeId": "HJeIFN6bQB",
+        "pinKey": "BygFrrHgXr"
+      }
+    },
+    {
+      "id": "HymTFNpZQH",
+      "input": {
+        "nodeId": "BJlpYNTbmS",
+        "pinKey": "rJ-trBSlmB"
+      },
+      "output": {
+        "nodeId": "HkTFEpZXB",
         "pinKey": "H1wh06BEW"
       }
     },
     {
-      "id": "Sk4Wr4JmB",
+      "id": "rkbLt4T-QS",
       "input": {
-        "nodeId": "HJt4tl1QS",
-        "pinKey": "Hk9zDekmr"
+        "nodeId": "HJeIFN6bQB",
+        "pinKey": "rJ-trBSlmB"
       },
       "output": {
-        "nodeId": "B1zWHN17H",
+        "nodeId": "SkUYNTb7H",
         "pinKey": "H1wh06BEW"
-      }
-    },
-    {
-      "id": "rJgkK71mS",
-      "input": {
-        "nodeId": "H100_QJ7B",
-        "pinKey": "ryIMweJmr"
-      },
-      "output": {
-        "nodeId": "HJt4tl1QS",
-        "pinKey": "BkgzMPlk7r"
-      }
-    },
-    {
-      "id": "rke7rEkmr",
-      "input": {
-        "nodeId": "r1kXSN17r",
-        "pinKey": "ryIMweJmr"
-      },
-      "output": {
-        "nodeId": "B1xGrVy7r",
-        "pinKey": "BkgzMPlk7r"
       }
     }
   ],
@@ -126,68 +126,53 @@
     },
     {
       "boundLiterals": {
-        "B1GGMPlyQr": "Continuously",
-        "Hk9zDekmr": "\"It works!\"",
-        "Sy_rOlJ7H": "2"
-      },
-      "id": "B1xGrVy7r",
-      "position": {
-        "units": "slots",
-        "x": 12,
-        "y": 3
-      },
-      "type": "@/print-row"
-    },
-    {
-      "boundLiterals": {
-        "H1wh06BEW": "\"Hello\""
+        "H1wh06BEW": "\"Hello world!\""
       },
       "id": "B1zWHN17H",
       "position": {
         "units": "slots",
-        "x": 6,
+        "x": 8,
         "y": 2
       },
       "type": "xod/debug/tweak-string-32"
     },
     {
       "boundLiterals": {
-        "B1GGMPlyQr": "Continuously",
-        "Hk9zDekmr": "\"It works!\"",
-        "Sy_rOlJ7H": "1"
+        "Bk4KSSrxXr": "2",
+        "SJKHrSeQH": "Continuously"
       },
-      "id": "H100_QJ7B",
+      "id": "BJlpYNTbmS",
       "position": {
         "units": "slots",
-        "x": 8,
-        "y": 3
+        "x": 3,
+        "y": 5
       },
-      "type": "@/print-row"
+      "type": "@/print-at"
     },
     {
       "boundLiterals": {
-        "H1wh06BEW": "\"It works!\""
+        "Bk4KSSrxXr": "1",
+        "SJKHrSeQH": "Continuously"
       },
-      "id": "HJ_Zr417H",
+      "id": "HJeIFN6bQB",
       "position": {
         "units": "slots",
         "x": 10,
-        "y": 2
+        "y": 3
       },
-      "type": "xod/debug/tweak-string-32"
+      "type": "@/print-at"
     },
     {
       "boundLiterals": {
-        "B1GGMPlyQr": "Continuously",
-        "Hk9zDekmr": "\"Hello, world\""
+        "H1wh06BEW": "\"On the text LCD\""
       },
-      "id": "HJt4tl1QS",
+      "id": "HkTFEpZXB",
       "position": {
         "units": "slots",
-        "x": 4,
-        "y": 3
+        "x": 7,
+        "y": 4
       },
-      "type": "@/print-row"
+      "type": "xod/debug/tweak-string-32"
     },
     {
       "boundLiterals": {
@@ -205,9 +190,21 @@
     },
     {
       "boundLiterals": {
-        "H1wh06BEW": "\"01234567890123456789\""
+        "SJKHrSeQH": "Continuously"
       },
-      "id": "r1elGrNy7B",
+      "id": "SJ3uV6-Xr",
+      "position": {
+        "units": "slots",
+        "x": 4,
+        "y": 3
+      },
+      "type": "@/print-at"
+    },
+    {
+      "boundLiterals": {
+        "H1wh06BEW": "\"Nice to meet you\""
+      },
+      "id": "SkUYNTb7H",
       "position": {
         "units": "slots",
         "x": 14,
@@ -217,17 +214,15 @@
     },
     {
       "boundLiterals": {
-        "B1GGMPlyQr": "Continuously",
-        "Hk9zDekmr": "\"It works!\"",
-        "Sy_rOlJ7H": "3"
+        "H1wh06BEW": "\"- XOD\""
       },
-      "id": "r1kXSN17r",
+      "id": "SyWTKV6-7S",
       "position": {
         "units": "slots",
-        "x": 16,
-        "y": 3
+        "x": 13,
+        "y": 4
       },
-      "type": "@/print-row"
+      "type": "xod/debug/tweak-string-32"
     },
     {
       "boundLiterals": {
@@ -243,15 +238,18 @@
     },
     {
       "boundLiterals": {
-        "H1wh06BEW": "\"AWESOME 8-)\""
+        "Bk4KSSrxXr": "3",
+        "SJKHrSeQH": "Continuously",
+        "SylLSSgmr": "11",
+        "rJ38HSxmH": "5"
       },
-      "id": "ryMQBNyQr",
+      "id": "rkMaY4a-7r",
       "position": {
         "units": "slots",
-        "x": 18,
-        "y": 2
+        "x": 9,
+        "y": 5
       },
-      "type": "xod/debug/tweak-string-32"
+      "type": "@/print-at"
     }
   ]
 }
