@@ -1,5 +1,5 @@
 {
-  "description": "Checks are UID empty",
+  "description": "Checks whether a UID is empty which corresponds to “no tag”",
   "links": [
     {
       "id": "B1TezRBzB",
