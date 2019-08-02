@@ -1,5 +1,5 @@
 {
-  "description": "Delays the changing of the `EN` value to false for a specified time. Switching from false to true sets true in the `ACT` pin instantly.",
+  "description": "Delays changes of the `EN` value from true to false by the specified time. Switching `EN` from false to true acts instantly.",
   "links": [
     {
       "id": "B1WAueIMr",
@@ -79,7 +79,7 @@
       "type": "@/continuously-pausable"
     },
     {
-      "description": "Outputs true when the `EN` pin has true value or overrun is in the progress",
+      "description": "Outputs true when `EN` is true or it became false less than `T` seconds ago",
       "id": "By1A_gLfB",
       "label": "ACT",
       "position": {
@@ -102,7 +102,7 @@
       "type": "@/delay"
     },
     {
-      "description": "Turns on the overrun on true",
+      "description": "The enableness value to monitor",
       "id": "HJEh_lLGH",
       "label": "EN",
       "position": {
@@ -113,7 +113,7 @@
       "type": "xod/patch-nodes/input-boolean"
     },
     {
-      "description": "Resets the overrun timer",
+      "description": "Resets the overrun timer causing `ACT` to switch to false immediately. The `DONE` pulse will not fire.",
       "id": "HkkyKlLGB",
       "label": "RST",
       "position": {
