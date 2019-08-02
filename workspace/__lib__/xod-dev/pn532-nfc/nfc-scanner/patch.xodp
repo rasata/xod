@@ -2,28 +2,6 @@
   "description": "A quick-start node which represents an RFID/NFC module.\nInitializes the module and reads the UID of a detected card\n\nPossible errors:\n— Initialization error",
   "links": [
     {
-      "id": "ByyeSAzPPfS",
-      "input": {
-        "nodeId": "rJpBCMPPGr",
-        "pinKey": "r1QEHf3DX"
-      },
-      "output": {
-        "nodeId": "HJ5rRMvDfS",
-        "pinKey": "__out__"
-      }
-    },
-    {
-      "id": "H14Rtql7S",
-      "input": {
-        "nodeId": "HkZRKqlXB",
-        "pinKey": "__in__"
-      },
-      "output": {
-        "nodeId": "rJpBCMPPGr",
-        "pinKey": "Sk3BHM2Pm"
-      }
-    },
-    {
       "id": "HkSgSCMPvGH",
       "input": {
         "nodeId": "B12H0Gwvzr",
@@ -46,6 +24,17 @@
       }
     },
     {
+      "id": "Hyw2ttZXr",
+      "input": {
+        "nodeId": "B1vSAzDPGr",
+        "pinKey": "__in__"
+      },
+      "output": {
+        "nodeId": "rJpBCMPPGr",
+        "pinKey": "Sk3BHM2Pm"
+      }
+    },
+    {
       "id": "S1GxBRGPDMB",
       "input": {
         "nodeId": "BJ_BCGDwzS",
@@ -54,17 +43,6 @@
       "output": {
         "nodeId": "rJpBCMPPGr",
         "pinKey": "rkQUBzhvQ"
-      }
-    },
-    {
-      "id": "SJ7eHCfDPzS",
-      "input": {
-        "nodeId": "SJNHAfDvfH",
-        "pinKey": "rkTFef3P7"
-      },
-      "output": {
-        "nodeId": "rJMBAGwPzB",
-        "pinKey": "__out__"
       }
     },
     {
@@ -79,58 +57,25 @@
       }
     },
     {
-      "id": "Skuk7vPfS",
+      "id": "SkH3YKb7H",
       "input": {
-        "nodeId": "SyFSCMPDGr",
-        "pinKey": "Bkh8A_Sv1-"
+        "nodeId": "rJpBCMPPGr",
+        "pinKey": "r1QEHf3DX"
       },
       "output": {
-        "nodeId": "SJnAfwPMB",
-        "pinKey": "__out__"
+        "nodeId": "B12H0Gwvzr",
+        "pinKey": "rJ5Exf2P7"
       }
     },
     {
-      "id": "SybaKqlQB",
+      "id": "SyMhtKbQr",
       "input": {
         "nodeId": "rJpBCMPPGr",
         "pinKey": "rytEHf3vm"
       },
       "output": {
-        "nodeId": "r1PtK9lmH",
-        "pinKey": "SJVql9lXr"
-      }
-    },
-    {
-      "id": "Syo3KqlQB",
-      "input": {
-        "nodeId": "r1PtK9lmH",
-        "pinKey": "ByFqg5eXr"
-      },
-      "output": {
         "nodeId": "SJeb7Pwzr",
         "pinKey": "BklspuwpW"
-      }
-    },
-    {
-      "id": "Syu3K5x7H",
-      "input": {
-        "nodeId": "r1PtK9lmH",
-        "pinKey": "HkFFgqx7B"
-      },
-      "output": {
-        "nodeId": "SJNHAfDvfH",
-        "pinKey": "HkCoxf2DX"
-      }
-    },
-    {
-      "id": "r1nxrRGwvfB",
-      "input": {
-        "nodeId": "SJNHAfDvfH",
-        "pinKey": "S105eMnP7"
-      },
-      "output": {
-        "nodeId": "SyFSCMPDGr",
-        "pinKey": "HkyxURuSPyW"
       }
     },
     {
@@ -142,28 +87,6 @@
       "output": {
         "nodeId": "rJpBCMPPGr",
         "pinKey": "rkQUBzhvQ"
-      }
-    },
-    {
-      "id": "rkOeSRzPwfB",
-      "input": {
-        "nodeId": "ryiBAMDwMS",
-        "pinKey": "__in__"
-      },
-      "output": {
-        "nodeId": "B12H0Gwvzr",
-        "pinKey": "rJ5Exf2P7"
-      }
-    },
-    {
-      "id": "rySRF9lQS",
-      "input": {
-        "nodeId": "B1vSAzDPGr",
-        "pinKey": "__in__"
-      },
-      "output": {
-        "nodeId": "HkZRKqlXB",
-        "pinKey": "__out__"
       }
     },
     {
@@ -195,7 +118,7 @@
       "position": {
         "units": "slots",
         "x": 0,
-        "y": 5
+        "y": 4
       },
       "type": "@/output-nfc-uid"
     },
@@ -203,8 +126,8 @@
       "id": "BJ_BCGDwzS",
       "position": {
         "units": "slots",
-        "x": 4,
-        "y": 4
+        "x": 1,
+        "y": 3
       },
       "type": "xod/core/flip-flop"
     },
@@ -214,8 +137,8 @@
       "label": "ACK",
       "position": {
         "units": "slots",
-        "x": 7,
-        "y": 5
+        "x": 2,
+        "y": 4
       },
       "type": "xod/patch-nodes/output-pulse"
     },
@@ -225,44 +148,16 @@
       "label": "TAG",
       "position": {
         "units": "slots",
-        "x": 4,
-        "y": 5
-      },
-      "type": "xod/patch-nodes/output-boolean"
-    },
-    {
-      "id": "HJ5rRMvDfS",
-      "label": "DEV",
-      "position": {
-        "units": "slots",
-        "x": 6,
-        "y": 2
-      },
-      "type": "xod/patch-nodes/from-bus"
-    },
-    {
-      "id": "HkZRKqlXB",
-      "position": {
-        "units": "slots",
-        "x": 0,
+        "x": 1,
         "y": 4
       },
-      "type": "xod/patch-nodes/jumper"
-    },
-    {
-      "id": "SJNHAfDvfH",
-      "position": {
-        "units": "slots",
-        "x": 1,
-        "y": 3
-      },
-      "type": "@/init"
+      "type": "xod/patch-nodes/output-boolean"
     },
     {
       "id": "SJeb7Pwzr",
       "position": {
         "units": "slots",
-        "x": 5,
+        "x": 1,
         "y": 1
       },
       "type": "xod/core/continuously-pausable"
@@ -276,19 +171,10 @@
       "label": "ACT",
       "position": {
         "units": "slots",
-        "x": 2,
+        "x": 1,
         "y": 0
       },
       "type": "xod/patch-nodes/input-boolean"
-    },
-    {
-      "id": "SyFSCMPDGr",
-      "position": {
-        "units": "slots",
-        "x": 2,
-        "y": 1
-      },
-      "type": "xod/core/flip-flop"
     },
     {
       "description": "A port number for the interrupt request",
@@ -302,42 +188,13 @@
       "type": "xod/patch-nodes/input-port"
     },
     {
-      "id": "r1PtK9lmH",
-      "position": {
-        "units": "slots",
-        "x": 3,
-        "y": 3
-      },
-      "type": "xod/core/wait-all"
-    },
-    {
-      "id": "rJMBAGwPzB",
-      "label": "DEV",
-      "position": {
-        "units": "slots",
-        "x": 1,
-        "y": 2
-      },
-      "type": "xod/patch-nodes/from-bus"
-    },
-    {
       "id": "rJpBCMPPGr",
-      "position": {
-        "units": "slots",
-        "x": 6,
-        "y": 3
-      },
-      "type": "@/pair-tag"
-    },
-    {
-      "id": "ryiBAMDwMS",
-      "label": "DEV",
       "position": {
         "units": "slots",
         "x": 0,
         "y": 2
       },
-      "type": "xod/patch-nodes/to-bus"
+      "type": "@/pair-tag"
     }
   ]
 }
