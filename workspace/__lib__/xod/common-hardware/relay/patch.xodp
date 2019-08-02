@@ -70,9 +70,9 @@
   ],
   "nodes": [
     {
-      "description": "Fires on complete of updating the relay",
+      "description": "Fires when the data change is acknowledged",
       "id": "B1jH-YVzB",
-      "label": "OK",
+      "label": "ACK",
       "position": {
         "units": "slots",
         "x": 2,
@@ -115,7 +115,7 @@
       "type": "xod/patch-nodes/input-port"
     },
     {
-      "description": "Commutates a high voltage when the value is `True`",
+      "description": "Engages the relay switch when the value is `True`",
       "id": "SkgXWK4MB",
       "label": "ON",
       "position": {
